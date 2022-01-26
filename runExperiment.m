@@ -7,7 +7,7 @@ sessionNumber = str2num(sStr{1});
 
 experimentPhase = questdlg("Experiment phase", "Phase", "Pretraining", "Training", "Test", "Pretraining");
 
-subjectPrefix = char(join([pStr sStr], "-"));
+subjectPrefix = char(join([pStr sStr experimentPhase], "-"));
 
 %% Init toolbox
 start;
@@ -23,10 +23,16 @@ pigeonStimuli = cat(2, exp.pigeon.stimuli(pigeonNumber,:), [exp.stimulus.white, 
 
 switch experimentPhase
     case 'Pretraining'
+        % Trial 1-5 means left key, as per GoogleDoc stimulus diagram
+        % Trial 6-10 means right key, with same order
+
         trials = randomOrder(5 * 2, exp.pretraining.trialsPerStimulusPerKey * 5 * 2);
+
         i = 1;
         for trial = trials
             fprintf("No. of Trial: %i \n", i);
+            fprintf("Trial type: %i \n", trial);
+            result(i).trial = trial;
 
             itiTime = randi(exp.pretaining.iti);
             fprintf("ITI: %is \n", itiTime);
@@ -46,8 +52,15 @@ switch experimentPhase
             end
 
             fprintf("Stimulus: %i, Key: %i \n", original_stimulus, keySide);
+
             showStimuli(pigeonStimuli(original_stimulus), keySide);
-            pause(exp.pretraining.stimulusDuration);
+            keyOut = keyBuffer(exp.pretraining.stimulusDuration);
+            
+            if keyOut.raw(1) == 0
+                result(i).respPerTrial = 0;
+            else
+                result(i).respPerTrial = size(keyOut.raw, 1);
+            end
 
             if original_stimulus <= 3
                 toss_a_coin_to_the_witcher = randi([1 100], 1);
@@ -60,11 +73,16 @@ switch experimentPhase
 
             if toss_a_coin_to_the_witcher <= exp.pretaining.foodChance123
                 feeding(exp.feedingTime);
+                result(i).rewarded = 1;
+            else
+                result(i).rewarded = 0;
             end
 
             i = i + 1;
 
         end
+
+        save2File(result, "subject", subjectPrefix);
         
     case 'Training'
         closeWindow;
