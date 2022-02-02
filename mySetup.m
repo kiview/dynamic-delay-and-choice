@@ -52,7 +52,7 @@ global SETUP
 
 %% (1) Please enter path to the BiopsyToolbox folder
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-SETUP.toolboxPath = 'C:\Users\kevin\Documents\MATLAB\BiopsyToolbox2016F';
+SETUP.toolboxPath = 'C:\Users\edesnesli\Desktop\dynamic-delay-and-choice-master\BiopsyToolbox2016F';
 
 %% (2) Please choose the IO device
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

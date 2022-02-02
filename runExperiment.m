@@ -1,6 +1,15 @@
+%% Init toolbox
+start;
+experimentalConditions;
+%openNetworkIO;
+
 %% Input variables
 pStr = inputdlg("Pigeon number");
 pigeonNumber = str2num(pStr{1});
+pigeonRole = find(exp.pigeon.numberMapping==pigeonNumber);
+if isempty(pigeonRole)
+    error("Unknown pigeon number");
+end
 
 sStr = inputdlg("Session number");
 sessionNumber = str2num(sStr{1});
@@ -9,9 +18,6 @@ experimentPhase = questdlg("Experiment phase", "Phase", "Pretraining", "Training
 
 subjectPrefix = char(join([pStr sStr experimentPhase], "-"));
 
-%% Init toolbox
-start;
-experimentalConditions;
 
 initWindow(2);
 d = msgbox('Place window ^__^');
@@ -19,7 +25,7 @@ waitfor(d);
 
 
 %% Start session
-pigeonStimuli = cat(2, exp.pigeon.stimuli(pigeonNumber,:), [exp.stimulus.white, exp.stimulus.grey]);
+pigeonStimuli = cat(2, exp.pigeon.stimuli(pigeonRole,:), [exp.stimulus.white, exp.stimulus.grey]);
 
 switch experimentPhase
     case 'Pretraining'
@@ -59,7 +65,7 @@ switch experimentPhase
             if keyOut.raw(1) == 0
                 result(i).respPerTrial = 0;
             else
-                result(i).respPerTrial = size(keyOut.raw, 1);
+                result(i).respPerTrial = size(keyOut.raw, 1)+size(keyOut.raw, 2);
             end
 
             if original_stimulus <= 3
@@ -95,3 +101,4 @@ end
 
 %% Shutdown toolbox
 closeWindow;
+%closeNetworkIO;
