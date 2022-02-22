@@ -1,12 +1,19 @@
 exp.feedingTime = 0.05;
 
-exp.pretraining.trialsPerStimulusPerKey = 1; %
-exp.pretaining.iti = [1, 5];
+exp.pretraining.trialsPerStimulusPerKey = 6; % 6 in GoogleDoc
+exp.pretaining.iti = [1, 5]; % 10-20 in GoogleDoc
 exp.pretraining.stimulusDuration = 1; % seconds
 
 exp.pretaining.foodChance123 = 33; % percent
 exp.pretaining.foodChance4 = 100; % percent
 exp.pretaining.foodChance5 = 0; % percent
+
+exp.training.trialsPerCondition = 1; % 8 in GoogleDoc
+exp.training.iti = [1, 5]; % 15-45 in GoogleDoc
+exp.training.stimulusDuration = 5; % 12s
+exp.training.stimulusDecrement = .5;
+exp.training.foodChance = 33; % percent
+exp.training.secondStimulusDuration = 2;
 
 % color names as per experiment plan, consider changing actual color in files accordingly
 exp.stimulus.orange = loadImage(['stimuli/' 'orange.jpg']); % orange
