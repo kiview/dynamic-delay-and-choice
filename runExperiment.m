@@ -1,6 +1,16 @@
+%% Init toolbox
+start;
+openNetworkIO;
+bIO(1,1);
+bIO(5,1);
+experimentalConditions;
 %% Input variables
 pStr = inputdlg("Pigeon number");
 pigeonNumber = str2num(pStr{1});
+pigeonRole = find(exp.pigeon.numberMapping==pigeonNumber);
+if isempty(pigeonRole)
+    error("Unknown pigeon number");
+end
 
 sStr = inputdlg("Session number");
 sessionNumber = str2num(sStr{1});
@@ -9,9 +19,6 @@ experimentPhase = questdlg("Experiment phase", "Phase", "Pretraining", "Training
 
 subjectPrefix = char(join([pStr sStr experimentPhase], "-"));
 
-%% Init toolbox
-start;
-experimentalConditions;
 
 initWindow(2);
 d = msgbox('Place window ^__^');
@@ -19,7 +26,7 @@ waitfor(d);
 
 
 %% Start session
-pigeonStimuli = cat(2, exp.pigeon.stimuli(pigeonNumber,:), [exp.stimulus.white, exp.stimulus.grey]);
+pigeonStimuli = cat(2, exp.pigeon.stimuli(pigeonRole,:), [exp.stimulus.white, exp.stimulus.grey]);
 
 switch experimentPhase
     case 'Pretraining'
@@ -54,13 +61,11 @@ switch experimentPhase
             fprintf("Stimulus: %i, Key: %i \n", original_stimulus, keySide);
 
             showStimuli(pigeonStimuli(original_stimulus), keySide);
-            keyOut = keyBuffer(exp.pretraining.stimulusDuration);
+            keyOut = keyBuffer(exp.pretraining.stimulusDuration, 'goodKey',[keySide], inf);
+            %keyOut = keyBuffer(exp.pretraining.stimulusDuration,'goodKey',[1 2]);
+            %keyOut = keyBuffer(exp.pretraining.stimulusDuration);
             
-            if keyOut.raw(1) == 0
-                result(i).respPerTrial = 0;
-            else
-                result(i).respPerTrial = size(keyOut.raw, 1);
-            end
+            result(i).respPerTrial = keyOut.goodKey
 
             if original_stimulus <= 3
                 toss_a_coin_to_the_witcher = randi([1 100], 1);
@@ -95,3 +100,4 @@ end
 
 %% Shutdown toolbox
 closeWindow;
+closeNetworkIO;
