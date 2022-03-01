@@ -189,17 +189,21 @@ switch experimentPhase
 
                     result(i).respPerTrial = pecks;
                     result(i).delay = exp.training.stimulusDuration - (pecks * exp.training.stimulusDecrement);
+                    
+                    secondStimulusDuration = pecks * exp.training.stimulusDecrement;
+                    result(i).secondStimulus = secondStimulusDuration;
 
                     foodChanceThrow = randi([1 100], 1);
                     if foodChanceThrow <= exp.training.foodChance
                         showStimuli(pigeonStimuli(4), keySide);
+                        pause(secondStimulusDuration);
                         feeding(exp.feedingTime);
                         result(i).rewarded = 1;
                     else
                         showStimuli(pigeonStimuli(5), keySide);
+                        pause(secondStimulusDuration);
                         result(i).rewarded = 0;
                     end
-                    pause(exp.training.secondStimulusDuration)
 
             end
 

@@ -13,7 +13,6 @@ exp.training.iti = [1, 5]; % 15-45 in GoogleDoc
 exp.training.stimulusDuration = 5; % 12s
 exp.training.stimulusDecrement = .5;
 exp.training.foodChance = 33; % percent
-exp.training.secondStimulusDuration = 2;
 
 % color names as per experiment plan, consider changing actual color in files accordingly
 exp.stimulus.orange = loadImage(['stimuli/' 'orange.jpg']); % orange
