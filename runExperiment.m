@@ -196,14 +196,15 @@ switch experimentPhase
                     foodChanceThrow = randi([1 100], 1);
                     if foodChanceThrow <= exp.training.foodChance
                         showStimuli(pigeonStimuli(4), keySide);
-                        pause(secondStimulusDuration);
+                        keyOut = keyBuffer(secondStimulusDuration, 'goodKey', [keySide], inf);
                         feeding(exp.feedingTime);
                         result(i).rewarded = 1;
                     else
                         showStimuli(pigeonStimuli(5), keySide);
-                        pause(secondStimulusDuration);
+                        keyOut = keyBuffer(secondStimulusDuration, 'goodKey', [keySide], inf);
                         result(i).rewarded = 0;
                     end
+                    result(i).respPerTrialSecondStimulus = keyOut.goodKey;
 
             end
 
