@@ -14,6 +14,12 @@ exp.training.stimulusDuration = 5; % 12s
 exp.training.stimulusDecrement = .5;
 exp.training.foodChance = 33; % percent
 
+exp.test.stimulusDuration = 5; % 12s
+exp.test.stimulusDecrement = .5;
+exp.test.foodChance = 33; % percent
+exp.test.trialsPerCondition = 1; % 8 in GoogleDoc, will be performed for each eye
+exp.test.choiceTrialsPerCondition = 4; % 4 in GoogleDoc
+
 % color names as per experiment plan, consider changing actual color in files accordingly
 exp.stimulus.orange = loadImage(['stimuli/' 'orange.jpg']); % orange
 exp.stimulus.purple = loadImage(['stimuli/' 'purple.jpg']); % purple
