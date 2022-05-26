@@ -472,7 +472,7 @@ switch experimentPhase
 
                         % ni
                         showStimuli(pigeonStimuli(3), keySide);
-                        loopEndTime = exp.training.stimulusDuration - toc;
+                        loopEndTime = exp.test.stimulusDuration - toc;
 
                         pecks = 1;
 
@@ -545,7 +545,7 @@ switch experimentPhase
 
                         % ni
                         showStimuli(pigeonStimuli(3), keySide);
-                        loopEndTime = exp.training.stimulusDuration - toc;
+                        loopEndTime = exp.test.stimulusDuration - toc;
 
                         pecks = 1;
 
@@ -658,7 +658,7 @@ switch experimentPhase
 
                         % ni
                         showStimuli(pigeonStimuli(3), keySide);
-                        loopEndTime = exp.training.stimulusDuration - toc;
+                        loopEndTime = exp.test.stimulusDuration - toc;
 
                         pecks = 1;
 
@@ -737,7 +737,7 @@ switch experimentPhase
 
                         % ni
                         showStimuli(pigeonStimuli(3), keySide);
-                        loopEndTime = exp.training.stimulusDuration - toc;
+                        loopEndTime = exp.test.stimulusDuration - toc;
 
                         pecks = 1;
 
