@@ -270,20 +270,20 @@ switch experimentPhase
                         % decrease food delay by pecks
                         showStimuli(pigeonStimuli(original_stimulus), keySide);
                         tic
-                        loopEndTime = exp.training.stimulusDuration + toc;
+                        loopEndTime = exp.test.stimulusDuration + toc;
                         pecks = 0;
 
                         while(loopEndTime >= toc)
-                            keyOut = keyBuffer(exp.training.stimulusDecrement, 'goodKey', [keySide], inf);
+                            keyOut = keyBuffer(exp.test.stimulusDecrement, 'goodKey', [keySide], inf);
 
                             if keyOut.goodKey > 0
                                 pecks = pecks + keyOut.goodKey;
-                                loopEndTime = loopEndTime - (keyOut.goodKey * exp.training.stimulusDecrement);
+                                loopEndTime = loopEndTime - (keyOut.goodKey * exp.test.stimulusDecrement);
                             end
                         end
 
                         result(i).respPerTrial = pecks;
-                        result(i).delay = exp.training.stimulusDuration - (pecks * exp.training.stimulusDecrement);
+                        result(i).delay = exp.training.stimulusDuration - (pecks * exp.test.stimulusDecrement);
 
                         foodChanceThrow = randi([1 100], 1);
                         if foodChanceThrow <= exp.training.foodChance
@@ -296,11 +296,11 @@ switch experimentPhase
                     case 2
                         % increase food probability
                         showStimuli(pigeonStimuli(original_stimulus), keySide);
-                        keyOut = keyBuffer(exp.training.stimulusDuration, 'goodKey', [keySide], inf);
+                        keyOut = keyBuffer(exp.test.stimulusDuration, 'goodKey', [keySide], inf);
 
                         foodChanceBonus = keyOut.goodKey * 1.5;
                         foodChanceThrow = randi([1 100], 1);
-                        finalFoodChance = exp.training.foodChance + foodChanceBonus;
+                        finalFoodChance = exp.test.foodChance + foodChanceBonus;
 
                         if foodChanceThrow <= finalFoodChance
                             feeding(exp.feedingTime);
@@ -317,26 +317,26 @@ switch experimentPhase
                         showStimuli(pigeonStimuli(original_stimulus), keySide);
 
                         tic
-                        loopEndTime = exp.training.stimulusDuration + toc;
+                        loopEndTime = exp.test.stimulusDuration + toc;
                         pecks = 0;
 
                         while(loopEndTime >= toc)
-                            keyOut = keyBuffer(exp.training.stimulusDecrement, 'goodKey', [keySide], inf);
+                            keyOut = keyBuffer(exp.test.stimulusDecrement, 'goodKey', [keySide], inf);
 
                             if keyOut.goodKey > 0
                                 pecks = pecks + keyOut.goodKey;
-                                loopEndTime = loopEndTime - (keyOut.goodKey * exp.training.stimulusDecrement);
+                                loopEndTime = loopEndTime - (keyOut.goodKey * exp.test.stimulusDecrement);
                             end
                         end
 
                         result(i).respPerTrial = pecks;
-                        result(i).delay = exp.training.stimulusDuration - (pecks * exp.training.stimulusDecrement);
+                        result(i).delay = exp.test.stimulusDuration - (pecks * exp.test.stimulusDecrement);
                         
-                        secondStimulusDuration = pecks * exp.training.stimulusDecrement;
+                        secondStimulusDuration = pecks * exp.test.stimulusDecrement;
                         result(i).secondStimulus = secondStimulusDuration;
 
                         foodChanceThrow = randi([1 100], 1);
-                        if foodChanceThrow <= exp.training.foodChance
+                        if foodChanceThrow <= exp.test.foodChance
                             showStimuli(pigeonStimuli(4), keySide);
                             keyOut = keyBuffer(secondStimulusDuration, 'goodKey', [keySide], inf);
                             feeding(exp.feedingTime);
@@ -405,6 +405,7 @@ switch experimentPhase
                         % i2
                         keySide = 2;
                         showStimuli(pigeonStimuli(2), keySide);
+                        result(i).choice = keySide;
 
                         keyOut = keyBuffer(exp.test.stimulusDuration - toc, 'goodKey', keySide, inf);
 
@@ -430,7 +431,7 @@ switch experimentPhase
                     showStimuli([pigeonStimuli(1) pigeonStimuli(3)], [1 2]);
 
                     tic;
-                    keyOut = keyBuffer(inf, 'goodKey', 1, 1, 'badKey', 2, 1);
+                    keyOut = keyBuffer(exp.test.stimulusDuration, 'goodKey', 1, 1, 'badKey', 2, 1);
                     showStimuli;
 
                     if keyOut.goodKey > 0
@@ -646,6 +647,7 @@ switch experimentPhase
                     end
                 case 11
                     % ni + i1
+                    showStimuli([pigeonStimuli(3) pigeonStimuli(1)], [1 2]);
 
                     % choice
                     tic
@@ -725,6 +727,7 @@ switch experimentPhase
                     end
                 case 12
                     % ni + i2
+                    showStimuli([pigeonStimuli(3) pigeonStimuli(2)], [1 2]);
                 
                     % choice
                     tic
